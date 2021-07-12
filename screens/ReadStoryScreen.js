@@ -11,7 +11,7 @@ export default class ReadStoryScreen extends React.Component{
         this.state={
             search:'',
             allStories:[],
-            
+            dataScource:[]
         }
     }
 
@@ -35,7 +35,7 @@ export default class ReadStoryScreen extends React.Component{
     }
 
     searchFilterFunction=async(text)=>{
-
+        
     }
 
     render(){
@@ -51,8 +51,23 @@ export default class ReadStoryScreen extends React.Component{
                 <SearchBar
                    placeholder='SEARCH HERE'
                    onChangeText={(text)=>{this.searchFilterFunction(text)}}
+                   onClear={text => this.SearchFilterFunction('')}
                    value={this.state.search}
                    />
+                <View>
+                  if(this.state.search === ""){
+                    this.state.allStories.map((item)=>(
+                      <View style={{borderColor:'black',borderWidth:3}}>
+                        <Text>
+                          Title : {item.title}
+                        </Text>
+                        <Text>
+                          Author : {item.author}
+                        </Text>
+                      </View>
+                  ))
+                }
+                </View>
                 
             </View>
         )
