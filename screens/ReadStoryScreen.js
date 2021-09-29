@@ -35,12 +35,22 @@ export default class ReadStoryScreen extends React.Component{
     }
 
     searchFilterFunction=async(text)=>{
-        
+        const newData = this.state.allStories.filter((item)=>{
+            const itemData = item.title ?
+            item.title.toUpperCase()
+            : ''.toUpperCase();
+            const textData = text.toUpperCase();
+            return itemData.indexOf(textData) > -1;
+        })
+        this.setState({
+            dataSource: newData,
+            search:text
+        })
     }
 
     render(){
         return(
-            <View>
+            <View style={styles.container}>
                 <Header
                     backgroundColor={'pink'}
                     centerComponent={{
@@ -48,28 +58,22 @@ export default class ReadStoryScreen extends React.Component{
                         style:{fontWeight:'bold',color:'black',fontSize:30}
                     }}
                 />
+              <View style={{height:20,width:'100%'}}>
                 <SearchBar
                    placeholder='SEARCH HERE'
                    onChangeText={(text)=>{this.searchFilterFunction(text)}}
                    onClear={text => this.SearchFilterFunction('')}
                    value={this.state.search}
                    />
-                <View>
-                  if(this.state.search === ""){
-                    this.state.allStories.map((item)=>(
-                      <View style={{borderColor:'black',borderWidth:3}}>
-                        <Text>
-                          Title : {item.title}
-                        </Text>
-                        <Text>
-                          Author : {item.author}
-                        </Text>
-                      </View>
-                  ))
-                }
-                </View>
+              </View>
                 
             </View>
         )
     }
 }
+
+const styles =StyleSheet.create({
+    container:{
+        backgroundColor:'#fff'
+    }
+})
